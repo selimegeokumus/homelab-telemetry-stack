@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  # 1. Metrik Toplayıcı (Prometheus)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+  # 2. Bilgisayar/Sistem Metrik Sağlayıcısı (Node Exporter)
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter
+    restart: unless-stopped
+    ports:
+      - "9100:9100"
+
+  # 3. Görselleştirme Paneli (Grafana)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
